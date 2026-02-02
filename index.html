@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For You ❤️</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container" onclick="next()">
+      <div class="image-container">
+        <img id="memoryImage" src="images/1.jpg" alt="Us" />
+      </div>
+
+      <h1 id="title">Na Kanmani 💕</h1>
+      <p id="text">Don’t be shy… tap me 😘</p>
+
+      <div class="buttons hidden" id="buttons">
+        <button class="yes" onclick="yes(event)">
+          <i class="fa-solid fa-heart"></i> Yes
+        </button>
+        <button class="no" id="no" onclick="moveNo(event)">No 😅</button>
+      </div>
+    </div>
+
+    <script>
+      const name = "Ammu";
+
+      const steps = [
+        { title: `Hey ${name} 💕`, text: "Tap… I promise it’s worth it" },
+        { title: "Okay so… 😅", text: "I’ve been nervous about this" },
+        { title: "Like actually nervous", text: "My heart is racing rn 💓" },
+        { title: "You’re kinda special", text: "No pressure or anything 👀" },
+        { title: "You make my days better", text: "Even without trying 🥹" },
+        { title: "So I was thinking…", text: "What if we made it official?" },
+        { title: "Just hear me out 😌", text: "One small question…" },
+        { title: "Will you be my Valentine? 💘", text: "" },
+      ];
+
+      const images = [
+        "images/1.jpg",
+        "images/2.jpg",
+        "images/3.jpg",
+        "images/4.jpg",
+        "images/5.jpg",
+        "images/6.jpg",
+        "images/7.jpg",
+        "images/heart-final.jpg",
+      ];
+
+      const noMessages = [
+        "WAIT 😳",
+        "Are you sure??",
+        "That was a misclick 😅",
+        "Try again 💀",
+        "You didn’t mean that",
+        "My heart 💔",
+        "Okay now you’re playing",
+        "This button is broken",
+      ];
+
+      let step = 0;
+      let noCount = 0;
+
+      document.getElementById("memoryImage").src = images[0];
+
+      function next() {
+        if (step < steps.length - 1) {
+          step++;
+
+          document.getElementById("title").innerText = steps[step].title;
+          document.getElementById("text").innerText = steps[step].text;
+
+          document.getElementById("memoryImage").src = images[step];
+
+          if (step === steps.length - 1) {
+            document.getElementById("buttons").classList.remove("hidden");
+          }
+        }
+      }
+
+      function yes(e) {
+        e.stopPropagation();
+        document.body.innerHTML = `
+    <div class="container">
+      <h1>YAYYYY 💖</h1>
+      <p>You just made me really happy, ${name} 🥹</p>
+      <img src="images/heart-final.jpg" class="final-image" alt="Heart">
+
+      <!-- Hearts container -->
+      <div class="hearts"></div>
+    </div>
+  `;
+
+        setTimeout(() => {
+          const heartsContainer = document.querySelector(".hearts");
+
+          setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = 12 + Math.random() * 24 + "px";
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 5000);
+          }, 200);
+        }, 50);
+      }
+
+      function moveNo(e) {
+        e.stopPropagation();
+
+        const btn = document.getElementById("no");
+        btn.innerText = noMessages[noCount % noMessages.length];
+        noCount++;
+
+        btn.style.position = "absolute";
+        btn.style.left = Math.random() * 70 + "vw";
+        btn.style.top = Math.random() * 70 + "vh";
+      }
+
+      function createHearts() {
+        const heartsContainer = document.querySelector(".hearts");
+
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.style.left = Math.random() * 90 + "vw";
+          heart.style.animationDelay = Math.random() * 2 + "s";
+          heart.style.fontSize = 12 + Math.random() * 18 + "px";
+          heartsContainer.appendChild(heart);
+
+          setTimeout(() => heart.remove(), 5000);
+        }
+      }
+    </script>
+  </body>
+</html>
