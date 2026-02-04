@@ -13,7 +13,7 @@
   <body>
     <div class="container" onclick="next()">
       <div class="image-container">
-        <img id="memoryImage" src="images/1.jpg" alt="Us" />
+        <img id="memoryImage" src="images/1.jpg" alt="Us" decoding="async" />
       </div>
 
       <h1 id="title">Na Kanmani 💕</h1>
@@ -31,14 +31,38 @@
       const name = "Ammu";
 
       const steps = [
-        { title: `Hey ${name} 💕`, text: "Tap… I promise it’s worth it" },
-        { title: "Okay so… 😅", text: "I’ve been nervous about this" },
-        { title: "Like actually nervous", text: "My heart is racing rn 💓" },
-        { title: "You’re kinda special", text: "No pressure or anything 👀" },
-        { title: "You make my days better", text: "Even without trying 🥹" },
-        { title: "So I was thinking…", text: "What if we made it official?" },
-        { title: "Just hear me out 😌", text: "One small question…" },
-        { title: "Will you be my Valentine? 💘", text: "" },
+        {
+          title: `Hey ${name} 💕`,
+          text: "Okay… so I made this just for you",
+        },
+        {
+          title: "I’m a little nervous 😅",
+          text: "Not gonna lie, my heart’s kinda racing",
+        },
+        {
+          title: "But I wanted to say this",
+          text: "Because I keep thinking about you",
+        },
+        {
+          title: "You’re kinda special",
+          text: "The kind that makes ordinary days better",
+        },
+        {
+          title: "You do this thing",
+          text: "Where you make me smile without even trying 🥹",
+        },
+        {
+          title: "So I’ve been wondering…",
+          text: "What this could be if we tried",
+        },
+        {
+          title: "No big speech 😌",
+          text: "Just one honest question",
+        },
+        {
+          title: "Will you be my Valentine? 💘",
+          text: "",
+        },
       ];
 
       const images = [
@@ -51,6 +75,14 @@
         "images/7.jpg",
         "images/heart-final.jpg",
       ];
+
+      const preloadedImages = [];
+
+      images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+        preloadedImages.push(img);
+      });
 
       const noMessages = [
         "WAIT 😳",
@@ -75,7 +107,12 @@
           document.getElementById("title").innerText = steps[step].title;
           document.getElementById("text").innerText = steps[step].text;
 
-          document.getElementById("memoryImage").src = images[step];
+          const imageEl = document.getElementById("memoryImage");
+          const img = preloadedImages[step];
+
+          img.decode().then(() => {
+            imageEl.src = img.src;
+          });
 
           if (step === steps.length - 1) {
             document.getElementById("buttons").classList.remove("hidden");
@@ -87,7 +124,7 @@
         e.stopPropagation();
         document.body.innerHTML = `
     <div class="container">
-      <h1>YAYYYY 💖</h1>
+      <h1>Well… this just got better 😌💘</h1>
       <p>You just made me really happy, ${name} 🥹</p>
       <img src="images/heart-final.jpg" class="final-image" alt="Heart">
 
